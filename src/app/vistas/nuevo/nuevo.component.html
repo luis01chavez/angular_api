@@ -1,0 +1,15 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- register Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+        <input type="text" id="name" class="fadeIn second" placeholder="Nombre" formControlName="name">
+        <input type="text" id="register" class="fadeIn second" placeholder="Correo electrónico" formControlName="email">
+        <input type="password" id="password" class="fadeIn third" placeholder="Contraseña" formControlName="password">
+        <input type="password" id="password" class="fadeIn third" placeholder="Confirma tu contraseña" formControlName="password_confirmation">
+        <input type="submit" class="fadeIn fourth" value="Registrarse">
+        <div>
+            <a href="login" class="btn btn-success">Ya tengo una cuenta</a>
+        </div>
+      </form>
+    </div>
+  </div>

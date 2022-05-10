@@ -1,0 +1,26 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="assets/loginic.png"id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
+      <input type="text" id="login" class="fadeIn second" placeholder="Usuario" formControlName="email">
+      <input type="password" id="password" class="fadeIn third" placeholder="Contraseña" formControlName="password">
+      <input type="submit" class="fadeIn fourth" value="ingresar">
+      <div>
+        <a href="nuevo" class="btn btn-success">Registrarse</a>
+      </div>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div class="alert alert-danger" *ngIf="errorStatus">
+      <p>{{errorMsj}}</p>
+    </div>
+
+  </div>
+</div>
