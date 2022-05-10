@@ -3,6 +3,8 @@ import { FormGroup,FormControl,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { registerUser } from 'src/app/modelos/register.interface';
 import { ApiService } from '../../servicios/api/api.service';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 
  '@angular/forms'
 
@@ -27,7 +29,13 @@ export class NuevoComponent implements OnInit {
   }
 
   register(form:registerUser){
-    this.api.registerUs(form).subscribe(data =>{
+    this.api.registerUs(form).pipe(catchError((err) =>{
+      const validacines = err.error;
+      for (const property in validacines){
+        console.log(`${validacines[property]}`)
+      }
+      return throwError(err);
+    })).subscribe(data =>{
       let dataResponse:registerUser = data;
       if(dataResponse.status == 200){
         this.router.navigate(['login']);

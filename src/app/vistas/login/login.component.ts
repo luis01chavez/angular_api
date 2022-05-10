@@ -5,6 +5,8 @@ import { ApiService } from '../../servicios/api/api.service';
 import { LoginIn } from '../../modelos/login.interface';
 import { ResponseIn } from '../../modelos/response.interface';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,14 +37,20 @@ export class LoginComponent implements OnInit {
 
 
   onLogin(form:LoginIn){
-    this.api.loginByEmail(form).subscribe(data =>{
+    this.api.loginByEmail(form).pipe(catchError((err) =>{
+      const validacines = err.error;
+      for (const property in validacines){
+        console.log(`${validacines[property]}`)
+      }
+      return throwError(err);
+    })).subscribe(data =>{
       let dataResponse:ResponseIn = data;
       if(dataResponse.status == "okay"){
         localStorage.setItem("token", dataResponse.acces_token);
         this.router.navigate(['dashboard']);
       }else{
         this.errorStatus = true;
-        this.errorMsj = dataResponse.acces_token.msg;
+        this.errorMsj = dataResponse.msg;
       }
     })
   }
